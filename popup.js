@@ -8,7 +8,7 @@ $(document).ready(function() {
 	$("#template_name").on("keydown", function (e) {
     	return e.which !== 32;
 	});
-  	
+
 	document.getElementById("fragment-2").style.minWidth = "171px";
 	document.getElementById("fragment-1").style.minWidth = "171px";
 
@@ -32,7 +32,7 @@ $(document).ready(function() {
 
    			//run autofind.js, which will return an array of DOM elements
             chrome.tabs.executeScript(null, {file: "autofind.js"});
-		
+
 		});
 
 
@@ -59,14 +59,14 @@ $(document).ready(function() {
 
 				//make checkboxes for each element in inputs
 				$('#selections').append($('<label />').html(response[i][1]).prepend($('<input/>').attr({ type: 'checkbox', id: response[i][0]})).append($('<br>')));
-                                                                                  
+
 
 			}
 
 
 
 		});
-	
+
 
 
 
@@ -84,14 +84,14 @@ $(document).ready(function() {
 	});
 
 	function save_temp(template_name){
-        
+
 
 		var selected = [];
         	//append the id of selected inputs to selected
 		$('#selections input:checked').each(function() {
     		selected.push($(this).attr('id'));
 		});
-		
+
 
 		//store all the template data into one object
 		//template_data holds URL, Name, and selected IDs
@@ -123,7 +123,7 @@ $(document).ready(function() {
 		make_template_checkboxes();
 
 
-	} 
+	}
 
 	$("#quickgo").click(function(){
 
@@ -141,10 +141,10 @@ $(document).ready(function() {
 
 	$("#go").click(function(){
 
-		
+
 		//selected is an array of the selected templates in templates tab
 		var selected = [];
-		
+
 		//for each checked template, append their id to the 'selected' array
 		$('#template_boxes input:checked').each(function() {
     		selected.push($(this).attr('id'));
@@ -189,7 +189,7 @@ $(document).ready(function() {
 
 					//If XHR is ready
 					xhr.onreadystatechange = function() {
-	        				
+
 	        				if (xhr.readyState == 4 && xhr.status == 200) {
 
 	        					//Store fill_data.js into 'json_object'
@@ -198,11 +198,11 @@ $(document).ready(function() {
 	        					//keys stores all the keys to the data in 'json_object'
 	        					var keys = [];
 
-	        					//append all the keys to the key:value pairs in 'json_object' to the 'keys' array 
+	        					//append all the keys to the key:value pairs in 'json_object' to the 'keys' array
 								for(var k in json_object){
 									keys.push(k);
-								} 
-	        					
+								}
+
 	        					var matches = false;
 
 	        					//possible email carriers
@@ -404,9 +404,9 @@ $(document).ready(function() {
 
 		        							}
 
-		        							
 
-	
+
+
 
 		        							//If the ID does not match with any keys from 'json_object', assign the ID to a random string value
 		        							if (!matches){
@@ -432,7 +432,7 @@ $(document).ready(function() {
 
 								}
 
-								
+
 	        					});
 
 	        				}
@@ -440,7 +440,7 @@ $(document).ready(function() {
 
 					xhr.open("GET", chrome.extension.getURL('/fill_data.json'), true);
 					xhr.send();
-					
+
 
 				}else{
 
@@ -451,7 +451,7 @@ $(document).ready(function() {
 
 			});
 
-			
+
 		}else{
 
 			//only able to fill one template at a time
@@ -486,7 +486,7 @@ $(document).ready(function() {
 		//remove the templates' data from local storage
 		chrome.storage.local.remove(selected, function(){
 
-			for (var i = 0; i < selected.length; i++) {		
+			for (var i = 0; i < selected.length; i++) {
 				$('#' + selected[i]).remove();
 			}
 
@@ -562,33 +562,30 @@ $(document).ready(function() {
 
 	function fillin(callback){
 
-		chrome.tabs.executeScript(null, {file: 'application-a3ed0074ec.js'}, function(){
-			
-			for (var i = 0; i < ids.length; i++){
+		for (var i = 0; i < ids.length; i++){
 
-				var element_id = ids[i];
+			var element_id = ids[i];
 
-				chrome.tabs.executeScript(null, {file: 'dropdowns.js'}, function(){
+			chrome.tabs.executeScript(null, {file: 'dropdowns.js'}, function(){
 
-					chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-						
-						chrome.tabs.sendMessage(tabs[0].id, element_id, function(is_a_dropdown){
+				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 
-							if(is_a_dropdown){
-								
-								ids.splice($.inArray(element_id, ids), 1);	
+					chrome.tabs.sendMessage(tabs[0].id, element_id, function(is_a_dropdown){
 
-							}
+						if(is_a_dropdown){
 
-							callback();
+							ids.splice($.inArray(element_id, ids), 1);
 
-						});
+						}
+
+						callback();
+
 					});
+				});
 
-				});		
+			});
 
-			}
-		});
+		}
 
 	}
 

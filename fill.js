@@ -5,20 +5,20 @@ chrome.runtime.onMessage.addListener(function(response, sender, sendResponse){
 		//window.onload = function(){
 
 			for (var property in response) {
-		    	
+
 		    	if (response.hasOwnProperty(property)) {
 
 		    		var field = document.getElementById(property);
 
 
 		    		field.value = response[property];
-		        
+
 			    }
 			}
 
 		//}
 
-	
+
 	}
 });
 

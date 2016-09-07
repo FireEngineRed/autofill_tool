@@ -4,49 +4,37 @@ chrome.runtime.onMessage.addListener(
 	function(response, sender, sendResponse){
 
 		$(document).ready(function(){
-			
+
 			if (typeof response === 'string' || response instanceof String){
 
 				if ((document.getElementById(response)).nodeName == 'SELECT'){
-					
+
 					dropdown = true;
-
-					var id_of_random_option = select_element.children[Math.floor(Math.random()*(select_element.children.length))].id;
-
-
-					/*
-
-					-----Below sort of works...but doesn't use select2-----
 
 					var select_element = document.getElementById(response);
 
-					select_element.remove(0);
+					var random_option = null;
 
-
-					if (!((document.getElementById(id_of_random_option)).selected)){
-
-						document.getElementById(id_of_random_option).selected = true;						
+					// cannot pick a blank/empty value (ie select options that are just "Select" placeholders)
+					while (random_option === null || random_option.value === '') {
+						random_option = select_element.children[Math.floor(Math.random()*(select_element.children.length))];
 					}
 
-					*/
+					//update the value
+					select_element.value = random_option.value;
 
-
-					//Uses select2 - should work in v. 3.5*
-					$('#' + response).val(document.getElementById(id_of_random_option).text); // Change the value or make some change to the internal state
-					$('#' + response).trigger('change.select2'); // Notify only Select2 of changes
-
-
-
+					// dispatch a native DOM change event
+					select_element.dispatchEvent(new Event('change'));
 				}
-				
-				sendResponse(dropdown);	
+
+				sendResponse(dropdown);
 
 			}
 
 
 		});
 
-	
+
 
 
 });
