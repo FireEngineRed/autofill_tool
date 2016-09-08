@@ -1,35 +1,17 @@
-var visible_DOM_elements = ($('input[type!=checkbox], div').filter(':visible').filter('[title][title!=]'));
+//get all visible inputs with title, and then send back a 2d array with the inner arrays being [id, title] for each DOM result
 /* ('[title][title!=]') makes sure that the title actually has something in it, not "" */
+var visible_DOM_elements = ($('input[type!=checkbox], div').filter(':visible').filter('[title][title!=]'));
 var number_of_elements = visible_DOM_elements.length;
 
-var inputs = new Array(number_of_elements);
-for (var x = 0; x < number_of_elements; x++){
+var inputs = visible_DOM_elements.map(function(){
+    id = $( this ).attr('id');
+    if (id.includes('s2id_')){
+        id = id.replace('s2id_', '');
+    }
 
-	inputs[x] = new Array(2);
+    title = $( this ).attr('title');
 
-}
-
-
-visible_DOM_elements.each(function(i){
-
-	id = $( this ).attr('id');
-
-	if (id.includes('s2id_')){
-
-		id = id.replace('s2id_', '');
-
-	}
-
-	title = $( this ).attr('title');
-
-	inputs[i][0] = id;
-
-	inputs[i][1] = title;
-
+    return [[id, title]];
 });
 
-
 chrome.runtime.sendMessage(inputs);
-
-//get all visible inputs with title, and then send back a 2d array with the inner arrays being [id, title] for each DOM result
- 

@@ -1,67 +1,52 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>QA Custom Autofill</title>
-    
-    <link rel="stylesheet" href="jquery-ui.css">
-     
-     <script src="jquery-1.10.2.js"></script>
-    <script src="jquery-ui.js"></script>
-
-    <script src="popup.js"></script>
-   
-  </head>
-
-  <body>
-   
-  <div id="uitab">
-    <ul>
-      <li><a href="#fragment-1"><span>New</span></a></li>
-      <li><a href="#fragment-2"><span>Templates</span></a></li>
-    </ul>
-    
-    <div id="fragment-1">
-      <p id="autofill">Autofill:</p>
-      
-      <div id='selections'>
-
-      <!-- This is where you make checkbox inputs and labels dynamically in popup.js -->
-
-      </div>
-
-      <br>
-      <br>
-      <div id = 'tempname'>
-        
-        <label>Template Name:</label><input type='textbox' id='template_name' >
-
-      </div>
-      <br>
-
-      <!-- Save Template Button Here -->
-      <input type="button" id = 'save_template' value = 'Save'/>
-      <input type="button" id = 'quickgo' value = 'Go'/>
-
-    </div>
-
-    <div id="fragment-2">
-
-        <br>
-      <!-- This is where you show, from localstorage, the templates that are available for use -->
-      <!-- The templates that are shown here dynamically will all be buttons, and when they are clicked the form will be filled to the template's specifications -->
-      <div id = "template_boxes">
-        
-      </div>
-
-        <br>
-        <input type="button" id = 'delete' value = 'Delete'/>
-        <br>
-        <br>
-        <input type="button" id = 'go' value = 'Go'/>
-      
-
-  </div>
-   
-  </body>
+    <head>
+        <meta charset="utf-8">
+        <title>QA Custom Autofill</title>
+        <!-- css source for jquery ui -->
+        <link rel="stylesheet" href="jquery-ui.css">
+        <!-- JS sources -->
+        <script src="jquery-1.10.2.js"></script>
+        <script src="jquery-ui.js"></script>
+        <script src="popup.js"></script>
+    </head>
+    <body>
+        <!-- wrapper class for uitabs-->
+        <div id="uitab">
+            <!-- tab links/nav -->
+            <ul>
+                <li><a href="#tab-1"><span>New</span></a></li>
+                <li><a href="#tab-2"><span>Templates</span></a></li>
+            </ul>
+            <!-- tab 1: form fields -->
+            <div id="tab-1">
+                <p id="autofill">Autofill:</p>
+                <div id='selections'>
+                    <!-- This is where you make checkbox inputs and labels dynamically in popup.js -->
+                </div>
+                <br>
+                <br>
+                <div id = 'tempname'>
+                    <label>Template Name:</label><input type='textbox' id='template_name' >
+                </div>
+                <br>
+                <!-- Save Template Button Here -->
+                <input type="button" id = 'save_template' value = 'Save'/>
+                <input type="button" id = 'quickgo' value = 'Go'/>
+            </div>
+            <!-- tab 2: saved templates -->
+            <div id="tab-2">
+                <br>
+                <!-- This is where you show, from localstorage, the templates that are available for use -->
+                <!-- The templates that are shown here dynamically will all be buttons, and when they are clicked the form will be filled to the template's specifications -->
+                <div id = "template_boxes">
+                </div>
+                <br>
+                <input type="button" id = 'delete' value = 'Delete'/>
+                <br>
+                <br>
+                <input type="button" id = 'go' value = 'Go'/>
+            </div>
+        </div>
+    </body>
 </html>
