@@ -166,160 +166,160 @@ $(document).ready(function() {
             } else {
                 // one or more selected templates are good for this url.
                 if (ids.length) {
-                //run fill.js, which sets message listener that fills the browser page
-                chrome.tabs.executeScript(null, {file : 'fill.js'});
+                    //run fill.js, which sets message listener that fills the browser page
+                    chrome.tabs.executeScript(null, {file : 'fill.js'});
 
-                // create xhr variable, override mime type to expect json data
-                var xhr = new XMLHttpRequest();
-                xhr.overrideMimeType('application/json');
-                // set xhr readyStateChange function to listen for response
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        var matches = false;
+                    // create xhr variable, override mime type to expect json data
+                    var xhr = new XMLHttpRequest();
+                    xhr.overrideMimeType('application/json');
+                    // set xhr readyStateChange function to listen for response
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            var matches = false;
 
-                        //Store fill_data.js into 'fill_data'
-                        var fill_data = JSON.parse(xhr.responseText);
+                            //Store fill_data.js into 'fill_data'
+                            var fill_data = JSON.parse(xhr.responseText);
 
-                        if (ids.length > 0){
-                            //Iterate over all the IDs to be filled on the browser page
-                            for (var i = 0; i < ids.length; i++) {
-                                id = ids[i];
-                                id_lower = id.toLowerCase();
+                            if (ids.length > 0) {
+                                //Iterate over all the IDs to be filled on the browser page
+                                for (var i = 0; i < ids.length; i++) {
+                                    id = ids[i];
+                                    id_lower = id.toLowerCase();
 
-                                // generate random email
-                                if (id_lower.includes('email') && !(id_lower.includes('type'))){
-                                    matches = true;
-
-                                    data_to_message[id] = random_email();
-                                }
-
-                                // generate random phone number
-                                if (id_lower.includes('phone') && !(id_lower.includes('type'))){
-                                    matches = true;
-
-                                    var phone_num = '';
-                                    for (var z = 0; z < 10; z++){
-                                        phone_num += random_number(1, 9);
-                                    }
-
-                                    data_to_message[id] = phone_num.toString();
-                                }
-
-                                if (id_lower.includes('address') && !(id_lower.includes('email')) && !(id_lower.includes('city'))){
-                                    matches = true;
-
-                                    var streets = ['Second','Third','First','Fourth','Park','Fifth','Main','Sixth','Oak','Seventh','Pine','Maple','Cedar','Eighth','Elm','View','Washington','Ninth','Lake','Hill'];
-
-                                    data_to_message[id] = [random_number(1, 1000), streets[random_number(streets.length-1)], 'St'].join(' ');;
-                                }
-
-                                if (id_lower.includes('postal')){
-                                    matches = true;
-
-                                    var postal_code = '';
-                                    for (var z = 0; z < 5; z++){
-                                        postal_code += random_number(1, 9);
-                                    }
-
-                                    data_to_message[id] = postal_code.toString();
-                                }
-
-                                if (id_lower.includes('date')){
-                                    matches = true;
-
-                                    var minDate = new Date(1980, 0, 1);
-                                    var maxDate = new Date();
-
-                                    var date = random_date(minDate, maxDate);
-
-                                    var month = pad(date.getMonth() + 1, 2);
-                                    var day = pad(date.getDate(), 2);
-                                    var year = date.getFullYear();
-
-                                    date = [month, day, year].join('/');
-                                    data_to_message[id] = date;
-                                }
-
-                                if (id_lower.includes('social')){
-                                    matches = true;
-
-                                    var ssn = '';
-                                    for (var z = 0; z < 9; z++){
-                                        ssn += random_number(1, 9);
-                                    }
-
-                                    data_to_message[id] = ssn.toString();
-                                }
-
-                                if (id_lower.includes('rank')){
-                                    matches = true;
-
-                                    data_to_message[id] = random_number(1, 500);
-                                }
-
-                                if (id_lower.includes('size')){
-                                    matches = true;
-
-                                    data_to_message[id] = 500;
-                                }
-
-                                if ((id_lower.includes('gpa')) || (id_lower.includes('scale'))){
-                                    matches = true;
-
-                                    // this is kind of special so it does not use the random_number function
-                                    var gpa = (Math.random()*4.01);
-                                    gpa = Math.round(gpa * 100) / 100;
-
-                                    data_to_message[id] = gpa;
-                                }
-
-                                if (id_lower.includes('percentile')){
-                                    matches = true;
-
-                                    data_to_message[id] = random_number(1, 99);
-                                }
-
-                                if (id_lower.includes('score')){
-                                    matches = true;
-
-                                    data_to_message[id] = (100 * Math.floor((random_number(100, 1600) + 50) / 100)).toString();
-                                }
-
-                                //Iterate over all the keys in 'fill_data'
-                                for (var key in fill_data) {
-                                    // there were no matches above for this field id, but we have fill_data (? not sure when this would happen)
-                                    if (!matches && id_lower.includes(key)) {
+                                    // generate random email
+                                    if (id_lower.includes('email') && !(id_lower.includes('type'))){
                                         matches = true;
 
-                                        data_to_message[id] = fill_data[key][random_number(fill_data[key].length-1)]
+                                        data_to_message[id] = random_email();
                                     }
+
+                                    // generate random phone number
+                                    if (id_lower.includes('phone') && !(id_lower.includes('type'))){
+                                        matches = true;
+
+                                        var phone_num = '';
+                                        for (var z = 0; z < 10; z++){
+                                            phone_num += random_number(1, 9);
+                                        }
+
+                                        data_to_message[id] = phone_num.toString();
+                                    }
+
+                                    if (id_lower.includes('address') && !(id_lower.includes('email')) && !(id_lower.includes('city'))){
+                                        matches = true;
+
+                                        var streets = ['Second','Third','First','Fourth','Park','Fifth','Main','Sixth','Oak','Seventh','Pine','Maple','Cedar','Eighth','Elm','View','Washington','Ninth','Lake','Hill'];
+
+                                        data_to_message[id] = [random_number(1, 1000), streets[random_number(streets.length-1)], 'St'].join(' ');;
+                                    }
+
+                                    if (id_lower.includes('postal')){
+                                        matches = true;
+
+                                        var postal_code = '';
+                                        for (var z = 0; z < 5; z++){
+                                            postal_code += random_number(1, 9);
+                                        }
+
+                                        data_to_message[id] = postal_code.toString();
+                                    }
+
+                                    if (id_lower.includes('date')){
+                                        matches = true;
+
+                                        var minDate = new Date(1980, 0, 1);
+                                        var maxDate = new Date();
+
+                                        var date = random_date(minDate, maxDate);
+
+                                        var month = pad(date.getMonth() + 1, 2);
+                                        var day = pad(date.getDate(), 2);
+                                        var year = date.getFullYear();
+
+                                        date = [month, day, year].join('/');
+                                        data_to_message[id] = date;
+                                    }
+
+                                    if (id_lower.includes('social')){
+                                        matches = true;
+
+                                        var ssn = '';
+                                        for (var z = 0; z < 9; z++){
+                                            ssn += random_number(1, 9);
+                                        }
+
+                                        data_to_message[id] = ssn.toString();
+                                    }
+
+                                    if (id_lower.includes('rank')){
+                                        matches = true;
+
+                                        data_to_message[id] = random_number(1, 500);
+                                    }
+
+                                    if (id_lower.includes('size')){
+                                        matches = true;
+
+                                        data_to_message[id] = 500;
+                                    }
+
+                                    if ((id_lower.includes('gpa')) || (id_lower.includes('scale'))){
+                                        matches = true;
+
+                                        // this is kind of special so it does not use the random_number function
+                                        var gpa = (Math.random()*4.01);
+                                        gpa = Math.round(gpa * 100) / 100;
+
+                                        data_to_message[id] = gpa;
+                                    }
+
+                                    if (id_lower.includes('percentile')){
+                                        matches = true;
+
+                                        data_to_message[id] = random_number(1, 99);
+                                    }
+
+                                    if (id_lower.includes('score')){
+                                        matches = true;
+
+                                        data_to_message[id] = (100 * Math.floor((random_number(100, 1600) + 50) / 100)).toString();
+                                    }
+
+                                    //Iterate over all the keys in 'fill_data'
+                                    for (var key in fill_data) {
+                                        // there were no matches above for this field id, but we have fill_data (? not sure when this would happen)
+                                        if (!matches && id_lower.includes(key)) {
+                                            matches = true;
+
+                                            data_to_message[id] = fill_data[key][random_number(fill_data[key].length-1)]
+                                        }
+                                    }
+
+                                    //If the ID does not match with any keys from 'fill_data', assign the ID to a random string value
+                                    if (!matches){
+                                        matches = true;
+                                        //make a random string 7-10 letters long
+                                        var random_text = random_word();
+                                        data_to_message[id] =  random_text;
+                                    }
+                                    matches = false;
                                 }
 
-                                //If the ID does not match with any keys from 'fill_data', assign the ID to a random string value
-                                if (!matches){
-                                    matches = true;
-                                    //make a random string 7-10 letters long
-                                    var random_text = random_word();
-                                    data_to_message[id] =  random_text;
-                                }
-                                matches = false;
+                                //Send 'data_to_message' to the current tab
+                                chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                                    chrome.tabs.sendMessage(tabs[0].id, data_to_message, {}, function() {
+                                        data_to_message = {};
+                                    });
+                                });
                             }
-
-                            //Send 'data_to_message' to the current tab
-                            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-                                chrome.tabs.sendMessage(tabs[0].id, data_to_message);
-                            });
                         }
-                    }
-                };
+                    };
 
-                // open xhr as GET to 'fill_data.json' send xhr
-                xhr.open('GET', chrome.extension.getURL('/fill_data.json'), true);
-                xhr.send();
+                    // open xhr as GET to 'fill_data.json' send xhr
+                    xhr.open('GET', chrome.extension.getURL('/fill_data.json'), true);
+                    xhr.send();
+                }
             }
-            }
-
-
         });
     }
 
