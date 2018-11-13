@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "QA Testing Autofill",
-  "description": "Simplifies QA testing of the Fireworks CRM by automatically entering dummy data into the applicable fields.",
-  "version": "1.0",
+  "name": "Fire Engine RED Chrome Tools",
+  "description": "Autofill PR template for FER Repo's, simplifies QA testing of the Fireworks CRM by automatically entering dummy data.",
+  "version": "2.0",
   "background" : {
       "scripts" : ["background.js"]
   },
@@ -11,9 +11,9 @@
 
   "page_action": {
     "default_icon": {
-      "19": "icon.png",
-      "38": "icon38.png"},
-    "default_title": "QA Autofill",
+      "19": "images/icon.png",
+      "38": "images/icon38.png"},
+    "default_title": "FER Tools",
     "default_popup": "popup.html"
     
   },
@@ -23,8 +23,19 @@
     "tabs",
     "declarativeContent",
     "storage",
-    "http://*/", 
-    "https://*/"
+    "https://stash.gotoextinguisher.com:8445/*",
+    "https://*.fireworkscrm.com/*"
+  ],
+  "content_scripts": [
+      {
+          "matches": [
+              "<all_urls>"
+          ],
+          "js": [
+              "prfill.js"
+          ],
+          "run_at": "document_end"
+      }
   ]
 
 
