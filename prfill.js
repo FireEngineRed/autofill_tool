@@ -53,4 +53,3 @@ chrome.runtime.onMessage.addListener((msg, sender, callback) => {
       createPRButton.addEventListener('click', () => fillPRTemplate(false));
     }
   })();
-  
