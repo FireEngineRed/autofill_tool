@@ -22,17 +22,3 @@ chrome.runtime.onInstalled.addListener(function () {
         ]);
     });
 });
-
-// /*
-//  * Send message to the page script to manually fill in 
-//  * the PR template text
-//  */
-// chrome.pageAction.onClicked.addListener(() => {
-//     // chrome.tabs.executeScript(null, { file: 'fill.js' });
-//     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-//       chrome.tabs.sendMessage(tabs[0].id, {
-//         action: 'forceFillTemplate',
-//         value: true,
-//       });
-//     });
-//   });
