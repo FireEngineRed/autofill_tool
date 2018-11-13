@@ -13,7 +13,7 @@ chrome.runtime.onInstalled.addListener(function () {
                         pageUrl: { urlContains: 'fireworkscrm.' },
                     }),
                     new chrome.declarativeContent.PageStateMatcher({
-                        pageUrl: { pathContains: 'pull-requests' },
+                        pageUrl: { pathContains: 'pull-requests', hostContains: 'stash.gotoextinguisher.com' },
                         css: ["textarea[id='pull-request-description']"]
                     })
                 ],
