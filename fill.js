@@ -3,6 +3,7 @@ chrome.runtime.onMessage.addListener(function(response, sender, sendResponse){
         for (var property in response) {
             if (response.hasOwnProperty(property)) {
                 var field = document.getElementById(property);
+                var fireChangeEvent = false;
 
                 // deal with selects
                 if (field.nodeName === 'SELECT') {
@@ -25,12 +26,18 @@ chrome.runtime.onMessage.addListener(function(response, sender, sendResponse){
                     //update the value
                     field.value = option.value;
 
+                    // make sure we dispatch a native DOM change event later
+                    fireChangeEvent = true;
                 } else {
                     field.value = response[property];
                 }
 
-                // dispatch a native DOM change event
-                field.dispatchEvent(new Event('change'));
+                // dispatch event(s)
+                field.dispatchEvent(new Event('input', {'bubbles': true}));
+
+                if (fireChangeEvent) {
+                    field.dispatchEvent(new Event('change', {'bubbles': true}));
+                }
             }
         }
     })

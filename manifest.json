@@ -3,7 +3,7 @@
 
   "name": "Fire Engine RED Chrome Tools",
   "description": "Autofill PR template for FER Repo's, simplifies QA testing of the Fireworks CRM by automatically entering dummy data.",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "background" : {
       "scripts" : ["background.js"]
   },
@@ -15,7 +15,7 @@
       "38": "images/icon38.png"
     },
     "default_title": "FER Chrome Tools",
-    "default_popup": "popup.html"    
+    "default_popup": "popup.html"
   },
   "icons": {
       "19": "images/icon.png",
