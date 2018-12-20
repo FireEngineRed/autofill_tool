@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener(function(response, sender, sendResponse){
                     field.value = option.value;
 
                     // make sure we dispatch a native DOM change event later
-                    fireChangeEvent = false
+                    fireChangeEvent = true;
                 } else {
                     field.value = response[property];
                 }
